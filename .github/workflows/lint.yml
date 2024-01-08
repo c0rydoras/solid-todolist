@@ -1,0 +1,31 @@
+name: Lint
+
+on:
+  pull_request:
+    branches:
+      - main 
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+  
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install Dependencies
+        run: pnpm install
+        working-directory: solid
+
+      - name: Lint
+        run: pnpm run lint
+        working-directory: solid
+        
